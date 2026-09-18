@@ -58,6 +58,7 @@ SPEC_JUDGE_BATCH = 5
 CONDITION_ID = "C{index}"
 
 
+
 class Prompt:
     SHOP = """
 Use the supplied shopping tools to satisfy the shopper. Continue until an observation reports done=true.
@@ -70,16 +71,27 @@ The environment has not reported done=true. Choose one of the supplied tools to 
 """.strip()
 
     CLARIFY = """
-You are AI Assistant which analyze the user shopping query. Answer what kind of shopping task is this request, with a single name from this list and nothing else:
-- IntentDecomposition: firm requirements mixed with nice-to-haves, including a preferred brand
-- RetrievalRecall: the item is described in words and the catalog must be searched for matches
-- ConstraintSatisfaction: every requirement is firm and checked against the exact variant bought
-- PreferenceReasoning: one loose requirement plus competing soft priorities the shopper must rank
-- Ranking: a set of candidates is ordered by a tradeoff the shopper states
-- Recovery: one exact item is named and must be replaced sensibly once unavailable
-- Justification: a valid purchase plus a reason that holds up against the product facts
+Read what a shopper asks for and decide which kind of shopping work it is, judging only by the shopper's own words.
+First note what the request holds, then name the kind. Reply with one JSON object and nothing else:
+{{"listed_items": "the items the shopper limits the choice to, listed one by one, or none",
+ "asks_why": "the shopper's words asking to be told why the pick is right, or none",
+ "wanted_model": "the one particular model the shopper wants and what they say to do if that exact model is gone, or none",
+ "words_to_match": "words the shopper says a listing has to match, as distinct from the kind of product they want, or none",
+ "use": "what the shopper says the item is for and which qualities matter more for it, or none",
+ "optional": "something the shopper would like but says is not required, or none",
+ "required": "the conditions the shopper says the item must meet",
+ "kind": "the name of the first kind below that fits"}}
 
-Shopping query:
+Kinds, in order:
+- StatedTradeoff: the shopper limits the choice to items they list and says how to order them.
+- ExplainedBuy: the shopper asks to be told why the pick is right.
+- NamedItem: the shopper wants one particular model and says what to do if that exact model is gone.
+- WideSearch: the shopper asks for a listing matching given words.
+- OpenPriorities: the shopper describes the use of the item and which qualities matter more for it.
+- SoftPreference: besides required conditions, the shopper names something they would like but do not require.
+- FirmConditions: every condition the shopper names is required.
+
+Shopping request:
 {query}
 """.strip()
 
@@ -305,7 +317,6 @@ class Utils:
 
     @staticmethod
     def _grounded(text: str, source: str) -> bool:
-
         wanted = Utils._words(text)
         if not wanted:
             return False
@@ -329,7 +340,6 @@ class Utils:
 
     @staticmethod
     def _words_match(wanted: str, available: Any, plural: bool = False) -> str:
-
         wanted_words = Utils._words(wanted, plural)
         if not wanted_words:
             return Verdict.UNVERIFIED
@@ -337,7 +347,6 @@ class Utils:
 
     @staticmethod
     def _contains_words(text: Any, quote: Any) -> bool:
-
         def words(value: Any) -> list[str]:
             normalized = unicodedata.normalize("NFKC", str(value or "")).casefold()
             return "".join(char if char.isalnum() else " " for char in normalized).split()
@@ -404,13 +413,13 @@ class Utils:
         found = Utils._number_units(text)
         return all(any(number == got and Utils._same_unit(unit, have) for got, have in found) for number, unit in wanted)
 
-
     @staticmethod
     def _same_spec(spec: str, other: str) -> bool:
         if Utils._number_units(spec) and Utils._number_units(other):
             return Utils._states_spec(spec, other) and Utils._states_spec(other, spec)
         words, others = Utils._words(spec, plural=True), Utils._words(other, plural=True)
         return bool(words and others) and (words <= others or others <= words)
+
 
     @staticmethod
     def _budget_terms(value: str) -> tuple[str | None, str | None, str | None]:
@@ -1182,6 +1191,7 @@ class Utils:
         )
 
         for tool_call, call_result in zip(tool_calls, result["calls"], strict=True):
+            name = tool_call["function"]["name"]
             messages.append(
                 {
                     "role": "tool",
@@ -1235,7 +1245,6 @@ class Utils:
 
 @dataclass
 class Requirement:
-
     kind: str
     value: str | None
     hidden: bool
@@ -1249,7 +1258,6 @@ class Requirement:
         return f"{self.id} [{self.kind}]"
 
     def check_key(self) -> tuple[Any, ...]:
-
         def text(value: str | None) -> str | None:
             return " ".join(value.casefold().split()) if value is not None else None
 
@@ -1261,8 +1269,6 @@ class Requirement:
 
 
 class Engine:
-
-    marker = ""
     row_checked: tuple[str, ...] = (Kind.BRAND,)
 
     def __init__(self, problem_data: dict[str, Any]) -> None:
@@ -1278,10 +1284,8 @@ class Engine:
             {"role": "user", "content": Prompt.SHOP.format(query=self.query)},
         ]
         self.dialogue: list[dict[str, Any]] = []
-        self.started = time.monotonic()
 
     def run(self) -> list[dict[str, Any]]:
-
         for turn in range(1, self.max_steps + 1):
             content, tool_calls = Utils._choose_calls(self)
             result = Utils._send_turn(self, turn, content, tool_calls)
@@ -1290,7 +1294,6 @@ class Engine:
         return self.dialogue
 
 class CartEngine(Engine):
-
     RESCUE_TURNS = 4
 
     def _code_calls(self, turn: int) -> list[dict[str, Any]]:
@@ -1405,7 +1408,6 @@ class CartEngine(Engine):
 
 
 class IntentDecomposition(Engine):
-    marker = "mix of firm requirements and nice-to-haves"
     MAX_SEARCHES = 3
     RESCUE_TURNS = 4
     JUDGE_BATCH = 40
@@ -1528,6 +1530,9 @@ class IntentDecomposition(Engine):
                 pool = self.valid if self._amount_matches(view.get("spec_amount")) else self.doubtful
                 pool[ref] = (view.get("preferred") is True, view.get("clear") is True)
             self.keywords += [q for q in verdict.get("keywords") or [] if isinstance(q, str)]
+        if new:
+            self.dialogue.append({"role": "judge", "judged": len(new),
+                                  "valid": {f"{ref[0]}::{ref[1]}": list(view) for ref, view in self.valid.items()}})
 
     def _send(self, turn: int, calls: list[tuple[str, dict[str, Any]]]) -> dict[str, Any]:
         tool_calls = [
@@ -1553,6 +1558,7 @@ class IntentDecomposition(Engine):
         spec = str(revised.get("spec") or "")
         if not spec or Utils._same_spec(spec, str(current.get("spec") or "")):
             return
+        # A replaced spec voids every verdict and the listings found for it: judge afresh on a new search.
         self.brief["spec"] = spec
         self.keywords += [q for q in revised.get("keywords") or [] if isinstance(q, str)]
         self.keywords.append(f"{self.brief.get('category') or ''} {spec}".strip())
@@ -1562,6 +1568,8 @@ class IntentDecomposition(Engine):
         self.phase, self.budget_cut = "search", True
 
     def _wait(self) -> list[tuple[str, dict[str, Any]]]:
+        """With nothing to buy and nothing to search, one idle turn lets a pending shopper message arrive.
+        After that, the judge's verdicts the amount check overruled are the last candidates before stopping."""
         if not (self.rescue or self.waited):
             self.waited = True
             return [(INSPECT_CART_TOOL, {})]
@@ -1570,6 +1578,7 @@ class IntentDecomposition(Engine):
         return []
 
     def _amount_matches(self, amount: Any) -> bool:
+        """Only an explicitly different amount overrides the verdict; a missing or unreadable one leaves it standing."""
         wanted = Utils._number_tokens(str(self.brief.get("spec") or ""))
         stated = Utils._number_tokens(str(amount if amount is not None else ""))
         return len(wanted) != 1 or len(stated) != 1 or stated[0] == wanted[0]
@@ -1607,7 +1616,6 @@ class IntentDecomposition(Engine):
 
 
 class RetrievalRecall(CartEngine):
-    marker = "search the catalog for what the user described"
     row_checked = (*Engine.row_checked, Kind.PHRASE)
     QUERY_BUDGET = 3
 
@@ -1707,7 +1715,6 @@ class RetrievalRecall(CartEngine):
 
 
 class ConstraintSatisfaction(CartEngine):
-    marker = "the user gives firm, non-negotiable requirements"
     REQUIREMENT_QUESTION = (
         "Before I choose a product, could you tell me your firm requirements, "
         "including any specification the item must have?"
@@ -1722,13 +1729,11 @@ class ConstraintSatisfaction(CartEngine):
 
 
 class PreferenceReasoning(Engine):
-    marker = "authorizes one test order"
 
     def run(self) -> list[dict[str, Any]]:
         return super().run()
 
 class Ranking(Engine):
-    marker = "has a stated tradeoff priority"
 
     MAX_ASKS = 10
     REPLY = "I checked the current price and stock of the candidates and am ordering the best-ranked one that is in stock within your budget."
@@ -2167,13 +2172,11 @@ Shopper messages, oldest first:
         return self._number(part.get("amount"))
 
     def _candidate_refs(self, raw: dict[str, Any]) -> list[dict[str, str]]:
-        query = Utils._words(self.query)
         refs = []
         for ref in raw.get("candidates") or []:
             if not isinstance(ref, dict):
                 continue
-            # Any value copied from the request counts; one outside the item parameters is resolved as a name.
-            clean = {str(p): str(v).strip() for p, v in ref.items() if Utils._words(v) and Utils._words(v) <= query}
+            clean = {p: str(v).strip() for p, v in ref.items() if p in self.ids and str(v).strip() and str(v).strip() in self.query}
             # A catalog key "<product>::<variant>" carries every identifying parameter at once.
             whole = next((v.split("::") for v in clean.values() if len(self.ids) > 1 and len(v.split("::")) == len(self.ids)), None)
             if whole or clean:
@@ -2311,12 +2314,12 @@ Shopper messages, oldest first:
 
 
 class Recovery(Engine):
-    marker = "critical constraints are category, budget, and in-stock availability"
 
     WAIT_SECONDS = 40
     MAX_ASKS = 6
     MODEL_TIME_BUDGET = 150
     MAX_LISTINGS = 15
+    DEBUG = False
 
     SCREEN = """
 Choose which catalog listings to open for a shopper, using only their search rows.
@@ -2344,6 +2347,7 @@ other items made for it), most promising for this request first.
             query=self.query, kind=self.kind, focus=focus, rows=json.dumps(rows, ensure_ascii=False), limit=min(60, limit or 2 * self.MAX_LISTINGS),
         ))
         picked = list(dict.fromkeys(k for x in answer.get("open") or [] if (k := self._label_key(labels, x)) is not None))
+        self._note("screen", {"asked": len(labels), "picked": len(picked)})
         return list(dict.fromkeys(picked))
 
     def _more_keys(self, keys: list[tuple[str, ...]], dropped: set[tuple[str, ...]]) -> list[tuple[str, ...]]:
@@ -2357,6 +2361,9 @@ other items made for it), most promising for this request first.
     def _row_text(self, outer: list[str], own: list[str]) -> str:
         return " | ".join(line for line in outer + own if line.partition(": ")[0] not in self.ids)
 
+    def _note(self, kind: str, data: Any) -> None:
+        if self.DEBUG:
+            self.dialogue.append({"role": "debug", "kind": kind, "data": data})
 
     @staticmethod
     def _norm(text: Any) -> str:
@@ -2784,6 +2791,10 @@ other items made for it), most promising for this request first.
         if (committed is None or not self._ok(committed)) and not self.done and self.turn < self.max_steps - 1:
             committed = self._fallback_commit(ordered, dropped, committed)
         if committed is not None and not self.done and self.turn < self.max_steps:
+            self._note("order", {
+                "item": list(committed), "state": self._state(committed),
+                "asks": getattr(self, "asks", 0), "model_seconds": round(getattr(self, "model_seconds", 0.0), 1),
+            })
             self._send([(self.order, order_args(committed))])
 
     READ = """
@@ -2861,10 +2872,11 @@ item, and "unsure" when that line is missing, unclear or disagrees with another 
         raw = self._read_plan(self.READ.format(tools=self._tools_text(), query=self.query, limit=max(2, min(8, self.max_calls))))
         if not raw:
             return super().run()
+        self._note("read", raw)
         try:
             self._shop(raw)
-        except Exception:
-            pass
+        except Exception as error:
+            self._note("error", repr(error))
         return self.dialogue
 
     def _shop(self, raw: dict[str, Any]) -> None:
@@ -2981,6 +2993,7 @@ item, and "unsure" when that line is missing, unclear or disagrees with another 
             ))
             if isinstance(answer.get("shortlist"), list) and answer["shortlist"]:
                 break
+        self._note("judge", answer)
         info: dict[tuple[str, ...], tuple[Any, ...]] = {}
         for position, pick in enumerate(answer.get("shortlist") or []):
             key = self._label_key(labels, pick.get("item")) if isinstance(pick, dict) else None
@@ -3045,15 +3058,16 @@ item, and "unsure" when that line is missing, unclear or disagrees with another 
             info[key] = (unproven, tuple(missed), tuple(loose), position)
         pool = list(info)
         ordered = sorted(info, key=lambda k: info[k])
+        self._note("ranked", [[list(k), info[k]] for k in ordered])
         return ordered
 
 class Justification(Engine):
-    marker = "a valid product plus a trustworthy reason"
 
     WAIT_SECONDS = 40
     MAX_ASKS = 6
     MODEL_TIME_BUDGET = 150
     MAX_LISTINGS = 15
+    DEBUG = False
 
     SCREEN = """
 Choose which catalog listings to open for a shopper, using only their search rows.
@@ -3081,6 +3095,7 @@ other items made for it), most promising for this request first.
             query=self.query, kind=self.kind, focus=focus, rows=json.dumps(rows, ensure_ascii=False), limit=min(60, limit or 2 * self.MAX_LISTINGS),
         ))
         picked = list(dict.fromkeys(k for x in answer.get("open") or [] if (k := self._label_key(labels, x)) is not None))
+        self._note("screen", {"asked": len(labels), "picked": len(picked)})
         return list(dict.fromkeys(picked))
 
     def _more_keys(self, keys: list[tuple[str, ...]], dropped: set[tuple[str, ...]]) -> list[tuple[str, ...]]:
@@ -3094,6 +3109,9 @@ other items made for it), most promising for this request first.
     def _row_text(self, outer: list[str], own: list[str]) -> str:
         return " | ".join(line for line in outer + own if line.partition(": ")[0] not in self.ids)
 
+    def _note(self, kind: str, data: Any) -> None:
+        if self.DEBUG:
+            self.dialogue.append({"role": "debug", "kind": kind, "data": data})
 
     @staticmethod
     def _norm(text: Any) -> str:
@@ -3521,6 +3539,10 @@ other items made for it), most promising for this request first.
         if (committed is None or not self._ok(committed)) and not self.done and self.turn < self.max_steps - 1:
             committed = self._fallback_commit(ordered, dropped, committed)
         if committed is not None and not self.done and self.turn < self.max_steps:
+            self._note("order", {
+                "item": list(committed), "state": self._state(committed),
+                "asks": getattr(self, "asks", 0), "model_seconds": round(getattr(self, "model_seconds", 0.0), 1),
+            })
             self._send([(self.order, order_args(committed))])
 
     READ = """
@@ -3598,10 +3620,11 @@ list, a path of categories, a range or a code, and not a figure that the item's 
         raw = self._read_plan(self.READ.format(tools=self._tools_text(), query=self.query, limit=max(2, min(8, self.max_calls))))
         if not raw:
             return super().run()
+        self._note("read", raw)
         try:
             self._shop(raw)
-        except Exception:
-            pass
+        except Exception as error:
+            self._note("error", repr(error))
         return self.dialogue
 
     def _shop(self, raw: dict[str, Any]) -> None:
@@ -3672,6 +3695,7 @@ list, a path of categories, a range or a code, and not a figure that the item's 
             ))
             if isinstance(answer.get("shortlist"), list) and answer["shortlist"]:
                 break
+        self._note("judge", answer)
         words = {w for w in re.findall(r"[^\W_]+", self._norm(wanted)) if len(w) > 1}
         asked = set(self._figures(wanted))
         info: dict[tuple[str, ...], tuple[Any, ...]] = {}
@@ -3736,6 +3760,7 @@ list, a path of categories, a range or a code, and not a figure that the item's 
             exact = 0 if tokens and tokens <= set(re.findall(r"[^\W_]+", self._norm(wanted))) else 1
             info[key] = (self._kind_mismatch(key), self._brand_miss(key), self._unstated(key), self._unclaimable(key), 0 if backed else 1, exact, missing, position)
         ordered = sorted(info, key=lambda k: info[k])
+        self._note("ranked", [[list(k), info[k], self.claim_lines.get(k)] for k in ordered])
         return ordered
 
     @staticmethod
@@ -3914,33 +3939,25 @@ list, a path of categories, a range or a code, and not a figure that the item's 
         args[container] = {arrays[0]: claims}
         return args
 
-FAMILIES: tuple[type[Engine], ...] = (
-    IntentDecomposition,
-    RetrievalRecall,
-    ConstraintSatisfaction,
-    PreferenceReasoning,
-    Ranking,
-    Recovery,
-    Justification,
-)
+# The routing prompt names each kind of shopping work; each name maps to the strategy that handles it.
+ROUTES: dict[str, type[Engine]] = {
+    "SoftPreference": IntentDecomposition,
+    "WideSearch": RetrievalRecall,
+    "FirmConditions": ConstraintSatisfaction,
+    "OpenPriorities": PreferenceReasoning,
+    "StatedTradeoff": Ranking,
+    "NamedItem": Recovery,
+    "ExplainedBuy": Justification,
+}
 
 
 def clarify(query: str) -> type[Engine]:
-    rules = " ".join(Utils._split_query(query)[1].split()).casefold()
-    for family in FAMILIES:
-        if family.marker in rules:
-            return family
-
-    try:
-        answer = Utils._llm(Prompt.CLARIFY.format(query=query), max_tokens=16).get("content") or ""
-    except Exception:
-        return Engine
-    family = next((family for family in FAMILIES if family.__name__ in answer), Engine)
-    return family
+    """The kind of shopping the request asks for, named by the model after it notes what the request holds."""
+    kind = str(Utils._json(Prompt.CLARIFY.format(query=query)).get("kind") or "").strip()
+    return ROUTES.get(kind, ConstraintSatisfaction)
 
 
 def agent_main(problem_data: dict[str, Any]) -> list[dict[str, Any]]:
-
     family = clarify(problem_data["environment"]["policy_view"]["query"])
     return family(problem_data).run()
 
