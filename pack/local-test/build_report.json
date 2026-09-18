@@ -1,0 +1,1129 @@
+{
+ "TF1-intent_decomposition-200044": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200063": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200065": {
+  "notes": [],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200081": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200084": {
+  "notes": [],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200088": {
+  "notes": [],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200098": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200124": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200126": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200159": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200163": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200165": {
+  "notes": [],
+  "replay": []
+ },
+ "TF1-intent_decomposition-200191": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200215": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF1-intent_decomposition-200247": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200015": {
+  "notes": [
+   "TF2 pool size 325 vs race 535"
+  ],
+  "replay": [
+   [
+    0.888889,
+    0.888889
+   ],
+   [
+    0.888889,
+    0.888889
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200035": {
+  "notes": [],
+  "replay": [
+   [
+    0.947368,
+    0.947368
+   ],
+   [
+    0.941239,
+    0.941239
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200041": {
+  "notes": [],
+  "replay": [
+   [
+    0.823529,
+    0.823529
+   ],
+   [
+    0.823529,
+    0.823529
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200045": {
+  "notes": [],
+  "replay": [
+   [
+    0.784194,
+    0.784194
+   ],
+   [
+    0.727471,
+    0.727471
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200085": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200120": {
+  "notes": [],
+  "replay": [
+   [
+    0.448124,
+    0.448124
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200122": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200132": {
+  "notes": [],
+  "replay": [
+   [
+    0.652055,
+    0.652055
+   ],
+   [
+    0.545455,
+    0.545455
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200136": {
+  "notes": [],
+  "replay": [
+   [
+    0.75,
+    0.75
+   ],
+   [
+    0.80024,
+    0.80024
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200145": {
+  "notes": [],
+  "replay": [
+   [
+    0.691358,
+    0.691358
+   ],
+   [
+    0.727273,
+    0.727273
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200164": {
+  "notes": [],
+  "replay": [
+   [
+    0.648649,
+    0.648649
+   ],
+   [
+    0.648649,
+    0.648649
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200202": {
+  "notes": [],
+  "replay": [
+   [
+    0.853659,
+    0.853659
+   ],
+   [
+    0.909091,
+    0.909091
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200204": {
+  "notes": [],
+  "replay": [
+   [
+    0.770642,
+    0.770642
+   ],
+   [
+    0.786726,
+    0.786726
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200215": {
+  "notes": [],
+  "replay": [
+   [
+    0.823529,
+    0.823529
+   ],
+   [
+    0.947368,
+    0.947368
+   ]
+  ]
+ },
+ "TF2-retrieval_recall-200235": {
+  "notes": [],
+  "replay": [
+   [
+    0.75,
+    0.75
+   ],
+   [
+    0.947368,
+    0.947368
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200022": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200025": {
+  "notes": [
+   "event never fired; stockout assumed"
+  ],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200037": {
+  "notes": [
+   "TF3 spec parsed from text: pack_quantity=5ct (candidates [('pack_quantity', '5ct')])"
+  ],
+  "replay": []
+ },
+ "TF3-constraint_satisfaction-200038": {
+  "notes": [
+   "TF3 spec parsed from text: warranty_duration=3mo (candidates [('warranty_duration', '3mo')])"
+  ],
+  "replay": []
+ },
+ "TF3-constraint_satisfaction-200049": {
+  "notes": [
+   "TF3 spec parsed from text: screen_size=16in (candidates [('screen_size', '16in')])"
+  ],
+  "replay": []
+ },
+ "TF3-constraint_satisfaction-200067": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200078": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200081": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200093": {
+  "notes": [
+   "TF3 spec parsed from text: pack_quantity=5ct (candidates [('pack_quantity', '5ct')])"
+  ],
+  "replay": []
+ },
+ "TF3-constraint_satisfaction-200094": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200143": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200155": {
+  "notes": [],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200157": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200161": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF3-constraint_satisfaction-200179": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200039": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200040": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200057": {
+  "notes": [
+   "TF5 name 'Ace led-808 ze19' -> 2 variants, chose 2781820876387946178::4460240583-1"
+  ],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200080": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200096": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200107": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200109": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200112": {
+  "notes": [
+   "TF5 name 'GELL gell 4340hi smart tv' -> 9 variants, chose 1639984060936509410::1386464641-4",
+   "TF5 name 'Expose expose smart tv 43 inch' -> 5 variants, chose 4596784412243482913::4963432296-6",
+   "TF5 name 'TCL iFFALCON 43/50/55/65/75 Inch 4K' -> 5 variants, chose 3397338322985194449::4967857876-1"
+  ],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200114": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200115": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200168": {
+  "notes": [],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200181": {
+  "notes": [
+   "TF5 name 'MSI msi thin a15 b7ucx-084ph' -> 3 variants, chose 5930731408096175731::3441258431-3",
+   "event never fired; stockout assumed"
+  ],
+  "replay": []
+ },
+ "TF5-ranking-200182": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF5-ranking-200192": {
+  "notes": [
+   "TF5 name 'Micromatic mrc-50' -> 4 variants, chose 1451360094019346222::3603847476-2",
+   "removed verdict non-gold 1451360094019346222::3603847476-2"
+  ],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF5-ranking-200196": {
+  "notes": [],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF6-recovery-200034": {
+  "notes": [
+   "TF6 gold size 124 vs race critical 122"
+  ],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF6-recovery-200045": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF6-recovery-200087": {
+  "notes": [],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF6-recovery-200113": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF6-recovery-200124": {
+  "notes": [
+   "TF6 gold size 124 vs race critical 121"
+  ],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF6-recovery-200158": {
+  "notes": [
+   "TF6 gold size 178 vs race critical 175"
+  ],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF6-recovery-200173": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF6-recovery-200182": {
+  "notes": [
+   "TF6 gold size 198 vs race critical 195"
+  ],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF6-recovery-200184": {
+  "notes": [
+   "TF6 gold size 137 vs race critical 135"
+  ],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF6-recovery-200242": {
+  "notes": [
+   "TF6 gold size 201 vs race critical 198"
+  ],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF6-recovery-200274": {
+  "notes": [
+   "TF6 gold size 149 vs race critical 146"
+  ],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF6-recovery-200303": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF6-recovery-200321": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF6-recovery-200329": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF6-recovery-200346": {
+  "notes": [
+   "TF6 gold size 47 vs race critical 44"
+  ],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200037": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200055": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200059": {
+  "notes": [],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200089": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200144": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF7-justification-200295": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200299": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200305": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200317": {
+  "notes": [
+   "removed verdict non-gold 125928489689306807::5023920215-4"
+  ],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF7-justification-200341": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200342": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200347": {
+  "notes": [
+   "removed verdict non-gold 170893067712666303::5067519583-default",
+   "removed verdict non-gold 1461676956934381171::4018343483-4"
+  ],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF7-justification-200418": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ },
+ "TF7-justification-200439": {
+  "notes": [],
+  "replay": [
+   [
+    1.0,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ]
+ },
+ "TF7-justification-200492": {
+  "notes": [
+   "removed verdict non-gold 110216583457188502::5073719503-1"
+  ],
+  "replay": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ }
+}
